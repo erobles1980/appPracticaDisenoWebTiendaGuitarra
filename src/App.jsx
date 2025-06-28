@@ -1,5 +1,3 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import Header from './Components/Header'
 import Footer from './Components/Footer'
@@ -9,27 +7,30 @@ import { db } from './db'
 
 export default function App() {
   
-   const [data,setData]=useState(db)
+   const [data]=useState(db)
    const [car, setCar]=useState([])
 
-    function addToCart(item){
-        const itemExist=car.findIndex(guitarra => guitarra.id===item.id)
+   function addToCar(item){
+        const itemExist=car.findIndex(guitarra => guitarra.id === item.id)
+
         if (itemExist>=0){
-            //haremos una copia del carrito
-            //console.log("Ya existe")
-            const updateCart=[...cart]
-            updateCart[itemExist].quantity++
-            setCart(updateCart)
+            //console.log("ya existe")
+            const updateCar=[...car]
+            updateCar[itemExist].quantity++
+            setCar(updateCar)
         }else{
-            //console.log("No existe")
+            //console.log("no existe")
             item.quantity=1
-            setCart(prevCart => [...prevCart, item])
+            setCar(prevCar => [...car, item])
         }
-    }
+
+   } 
 
   return (
     <>
-        <Header/>
+        <Header
+            car={car}
+        />
         <main className="container-xl mt-5">
             <h2 className="text-center">Nuestra Colección</h2>
 
@@ -38,7 +39,7 @@ export default function App() {
                     <Guitarra
                         key={guitarra.id}
                         guitarra={guitarra}
-                        addToCart={addToCart}
+                        addToCar={addToCar}
                     />     
                 ))}
             </div>
